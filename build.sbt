@@ -60,6 +60,7 @@ val shapelessDatatypeVersion = "0.1.6"
 val slf4jVersion = "1.7.25"
 val sparkeyVersion = "2.1.3"
 val tensorFlowVersion = "1.2.0"
+val xbeanAsm5Version = "4.5"
 
 val scalaMeterFramework = new TestFramework("org.scalameter.ScalaMeterFramework")
 
@@ -236,6 +237,7 @@ lazy val scioCore: Project = Project(
     "commons-io" % "commons-io" % commonsIoVersion,
     "org.apache.commons" % "commons-math3" % commonsMath3Version,
     "org.tensorflow" % "proto" % tensorFlowVersion,
+    "org.apache.xbean" % "xbean-asm5-shaded" % xbeanAsm5Version,
     "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonScalaModuleVersion,
     "com.google.auto.service" % "auto-service" % autoServiceVersion,
     "com.google.protobuf" % "protobuf-java" % protobufVersion,
