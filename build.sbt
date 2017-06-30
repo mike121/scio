@@ -218,7 +218,8 @@ lazy val root: Project = Project(
   scioRepl,
   scioExamples,
   scioSchemas,
-  scioTensorFlow
+  scioTensorFlow,
+  scioAvro
 )
 
 lazy val scioCore: Project = Project(
@@ -435,6 +436,27 @@ lazy val scioHdfs: Project = Project(
   scioTest % "test->test",
   scioSchemas % "test"
 )
+
+lazy val scioAvro: Project = Project(
+  "scio-avro",
+  file("scio-avro")
+).settings(
+  commonSettings ++ macroSettings ++ itSettings,
+  description := "Scio add-on for working with Avro",
+  libraryDependencies ++= beamDependencies,
+  libraryDependencies ++= Seq(
+    "org.apache.avro" % "avro" % avroVersion,
+    "commons-io" % "commons-io" % commonsIoVersion,
+    "org.apache.beam" % "beam-sdks-java-io-google-cloud-platform" % beamVersion,
+    "joda-time" % "joda-time" % jodaTimeVersion,
+    "org.joda" % "joda-convert" % jodaConvertVersion,
+    "org.slf4j" % "slf4j-api" % slf4jVersion,
+    "org.slf4j" % "slf4j-simple" % slf4jVersion % "test,it",
+    "org.scalatest" %% "scalatest" % scalatestVersion % "test,it",
+    "com.github.alexarchambault" %% "scalacheck-shapeless_1.13" % scalacheckShapelessVersion % "test",
+    "me.lyh" %% "shapeless-datatype-core" % shapelessDatatypeVersion % "test"
+  )
+).configs(IntegrationTest)
 
 lazy val scioJdbc: Project = Project(
   "scio-jdbc",
