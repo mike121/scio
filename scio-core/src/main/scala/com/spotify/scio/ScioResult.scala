@@ -60,8 +60,9 @@ class ScioResult private[scio] (val internal: PipelineResult, val context: ScioC
       }
       this.state
     }
-    f.onFailure {
-      case NonFatal(_) => context.updateFutures(state)
+    f.onComplete {
+      case Success(_) => Unit
+      case Failure(NonFatal(_)) => context.updateFutures(state)
     }
     f
   }
