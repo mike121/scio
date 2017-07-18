@@ -66,8 +66,17 @@ val scalaMeterFramework = new TestFramework("org.scalameter.ScalaMeterFramework"
 val commonSettings = Sonatype.sonatypeSettings ++ assemblySettings ++ Seq(
   organization       := "com.spotify",
 
-  scalaVersion       := "2.12.2",
-  crossScalaVersions := Seq("2.11.11", "2.12.2"),
+  resolvers += "nightlies" at "https://scala-ci.typesafe.com/artifactory/scala-release-temp/",
+  scalaVersion := {
+    //val propsUrl = new URL("https://scala-ci.typesafe.com/job/scala-2.12.x-integrate-bootstrap/lastSuccessfulBuild/artifact/jenkins.properties/*view*/")
+    //val props = new java.util.Properties
+    //props.load(propsUrl.openStream)
+    //props.getProperty("version")
+    "2.12.3-bin-92b1cc3"
+  },
+  scalaBinaryVersion := "2.12",
+  //scalaVersion       := "2.12.2",
+  //crossScalaVersions := Seq("2.11.11", "2.12.2"),
   scalacOptions                   ++= Seq("-Xmax-classfile-name", "100", "-target:jvm-1.8", "-deprecation", "-feature", "-unchecked"),
   scalacOptions in (Compile, doc) ++= Seq("-skip-packages", "org.apache.beam"),
   javacOptions                    ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint:unchecked"),
@@ -182,7 +191,7 @@ lazy val assemblySettings = Seq(
 )
 
 lazy val paradiseDependency =
-  "org.scalamacros" % "paradise" % scalaMacrosVersion cross CrossVersion.full
+  "org.scalamacros" % "paradise" % scalaMacrosVersion cross CrossVersion.fullMapped(_ => "2.12.2")
 lazy val beamDependencies = Seq(
   "org.apache.beam" % "beam-sdks-java-core" % beamVersion,
   "org.apache.beam" % "beam-runners-direct-java" % beamVersion,
